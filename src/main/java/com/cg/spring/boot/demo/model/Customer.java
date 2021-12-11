@@ -32,22 +32,22 @@ public class Customer  implements Serializable
 	@Column(name="CUSTOMER_ID")
 	private Long customerId;
 	
-	 @Column(name="addharNumber",unique= true)
+	 @Column(name="ADDHAR_NUMBER", length = 16, nullable = false, unique = true)
 	private Long addharNumber;
 	 
-	 @Column(name="firstName")
+	 @Column(name="firstName", length = 50, nullable = false)
 	private String firstName;
 	 
-	 @Column(name="middleName")
+	 @Column(name="middleName", length = 50, nullable = false)
 	private String middleName;
 	
-	 @Column(name="lastName")
+	 @Column(name="lastName", length = 50, nullable = false)
 	private String lastName;
 	
 	 @Column (name="MOBILE", length = 10, nullable = false, unique = true)
 	private String mobileNumber;
 	 
-	 @Column(name="email")
+	 @Column(name="email",length = 50, nullable = false, unique = true)
 	private String email;
 	 
 	 
