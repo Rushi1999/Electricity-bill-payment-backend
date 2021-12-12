@@ -40,10 +40,11 @@ public class Connection  implements Serializable{
 //	private int  customer;
 	
     
+    
 //    @OneToMany
 	@JoinColumn(name = "ADDRESS_ID", nullable = false)
-//    private Address address;
-	 private String address;
+    private Address address;
+//	 private String address;
 	
     @Column(name="CONNECTION_TYPE")
     @Enumerated(EnumType.STRING)
@@ -72,7 +73,7 @@ public class Connection  implements Serializable{
 		// TODO Auto-generated constructor stub
 	}	
 
-	public Connection(Long connectionId, Customer customer, String address, ConnectionType connectionType,
+	public Connection(Long connectionId, Customer customer, Address address, ConnectionType connectionType,
 			LocalDate applicationDate, LocalDate connectionDate, String connectionStatus) {
 		super();
 		this.connectionId = connectionId;
@@ -102,11 +103,11 @@ public class Connection  implements Serializable{
 		this.customer = customer;
 	}
 
-	public String getAddress() {
+	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
+	public void setAddress(Address address) {
 		this.address = address;
 	}
 
@@ -153,10 +154,7 @@ public class Connection  implements Serializable{
 
 	
     
-    
-    
-	
-    
+      
 }
 
 		
