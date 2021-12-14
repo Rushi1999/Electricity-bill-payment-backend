@@ -9,5 +9,10 @@ import com.cg.spring.boot.demo.model.User;
 public interface UserRepository extends JpaRepository<User, Long>  {
 
   public abstract User findByUserName(String userName);
+  
+
+
+  
+
 
 }

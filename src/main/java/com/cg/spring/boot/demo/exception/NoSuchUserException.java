@@ -1,4 +1,4 @@
-package  com.cg.spring.boot.demo.exception;
+package com.cg.spring.boot.demo.exception;
 
 public class NoSuchUserException extends Exception {
 

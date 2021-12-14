@@ -14,66 +14,58 @@ import com.cg.spring.boot.demo.model.User;
 import com.cg.spring.boot.demo.repository.UserRepository;
 
 @Service
-public class UserServiceImple implements UserService {
+public class UserServiceImpl implements UserService {
 
 	public boolean isLoggedIn;
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserServiceImple.class);
-
-	@Autowired
-	private UserRepository userRepository;
-
 	private User tempUser;
 
-	public User registerUser(User user) throws DuplicateUserException {	
+	private final Logger LOG = LoggerFactory.getLogger(this.getClass());
+
+	@Autowired
+	UserRepository userRepository;
+
+	public User registerUser(User appUser) throws DuplicateUserException {
 		LOG.info("register");
-		if (userRepository.findByUserName(user.getUserName())!=null)
-		{	throw new DuplicateUserException("This user is already register");
-		
-		}
-		else
-		{
-		return userRepository.save(user);
-		}
+		if (null == userRepository.findByUserName(appUser.getUserName()))
+			return userRepository.save(appUser);
+		throw new DuplicateUserException ("This user is already registered");
 	}
 
-
-	@Override
-	public User loginUser(User user) throws InvalidLoginCredentialException {
+	public User loginUser(User appUser) throws InvalidLoginCredentialException {
 		LOG.info("login");
-		tempUser = userRepository.findByUserName(user.getUserName());
-		if (tempUser.getUserName().equalsIgnoreCase(user.getUserName())) {
-			isLoggedIn = true;
-			return tempUser;
+		tempUser = userRepository.findByUserName(appUser.getUserName());
+		if (null != tempUser) {
+			if (appUser.equals(tempUser)) {
+				isLoggedIn = true;
+				LOG.info("login successful");
+				return tempUser;
+			}
 		}
-		throw new InvalidLoginCredentialException("invalid user or password");
+		throw new InvalidLoginCredentialException("Please enter valid Credential ");
+
 	}
-	
-	@Override
+
 	public String logout(String userName) throws NoSuchUserException {
 		LOG.info("logout");
 		if (isLoggedIn) {
 			isLoggedIn = false;
 			return "User logged out successfully.";
 		}
-		throw new NoSuchUserException(userName+" this user is not present");
+		throw new NoSuchUserException (userName + "No such User found");
 	}
-	
+
 	@Override
 	public User changePassword(User user) throws InvalidLoginCredentialException {
 		LOG.info("change your password");
 		if (userRepository.existsById(user.getUserId())) {
+			
 			return userRepository.save(user);
 		}
 		LOG.info(user.getUserId() + " does not exist.");
 		throw new InvalidLoginCredentialException(" this user is not present or invalid credebtial");
 	}
-
-//	@Override
-//	public void forgotPassword(String userName) {
-//
-//	}
-
+	
 	@Override
 	public User searchUserByUserName(String userName) throws NoSuchUserException {
 		LOG.info("get User By UserName");

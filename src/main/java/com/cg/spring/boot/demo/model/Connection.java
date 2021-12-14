@@ -2,6 +2,7 @@ package com.cg.spring.boot.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,9 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,11 @@ public class Connection  implements Serializable{
 	@Column(name = "CONNECTION_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int connectionId;
+
+	@Column(name = "CONSUMER_NUMBER")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long consumerNumber;
+
 	
 	// customerId auto-generated
     @OneToOne
@@ -39,7 +45,8 @@ public class Connection  implements Serializable{
 	private Customer customer;
 //	private int  customer;
 	
-       
+
+    
 //    @OneToMany
 	@JoinColumn(name = "ADDRESS_ID")
     private Address address;
@@ -65,17 +72,17 @@ public class Connection  implements Serializable{
 //    @Pattern(regexp = "^Active$|^Inactive$", message = "allowed input: active or inactive")
 	private String connectionStatus;
 
-    
-   
 	public Connection() {
 		super();
-		// TODO Auto-generated constructor stub
-	}	
+		
+	}
 
-	public Connection(int connectionId, Customer customer, Address address, ConnectionType connectionType,
-			LocalDate applicationDate, LocalDate connectionDate, String connectionStatus) {
+	public Connection(int connectionId, Long consumerNumber, Customer customer, Address address,
+			ConnectionType connectionType, LocalDate applicationDate, LocalDate connectionDate,
+			String connectionStatus) {
 		super();
 		this.connectionId = connectionId;
+		this.consumerNumber = consumerNumber;
 		this.customer = customer;
 		this.address = address;
 		this.connectionType = connectionType;
@@ -84,14 +91,20 @@ public class Connection  implements Serializable{
 		this.connectionStatus = connectionStatus;
 	}
 
-
-
 	public int getConnectionId() {
 		return connectionId;
 	}
 
 	public void setConnectionId(int connectionId) {
 		this.connectionId = connectionId;
+	}
+
+	public Long getConsumerNumber() {
+		return consumerNumber;
+	}
+
+	public void setConsumerNumber(Long consumerNumber) {
+		this.consumerNumber = consumerNumber;
 	}
 
 	public Customer getCustomer() {
@@ -142,18 +155,15 @@ public class Connection  implements Serializable{
 		this.connectionStatus = connectionStatus;
 	}
 
-
-
 	@Override
 	public String toString() {
-		return "Connection [connectionId=" + connectionId + ", customer=" + customer + ", address=" + address
-				+ ", connectionType=" + connectionType + ", applicationDate=" + applicationDate + ", connectionDate="
-				+ connectionDate + ", connectionStatus=" + connectionStatus + "]";
+		return "Connection [connectionId=" + connectionId + ", consumerNumber=" + consumerNumber + ", customer="
+				+ customer + ", address=" + address + ", connectionType=" + connectionType + ", applicationDate="
+				+ applicationDate + ", connectionDate=" + connectionDate + ", connectionStatus=" + connectionStatus
+				+ "]";
 	}
 
 	
     
-      
+   
 }
-
-		

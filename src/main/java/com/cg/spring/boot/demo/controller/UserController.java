@@ -13,54 +13,53 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import  com.cg.spring.boot.demo.exception.DuplicateUserException;
-import  com.cg.spring.boot.demo.exception.InvalidLoginCredentialException;
+import com.cg.spring.boot.demo.exception.DuplicateUserException;
+import com.cg.spring.boot.demo.exception.InvalidLoginCredentialException;
 import com.cg.spring.boot.demo.exception.NoSuchUserException;
 import com.cg.spring.boot.demo.model.User;
-import  com.cg.spring.boot.demo.service.UserServiceImple;
+import com.cg.spring.boot.demo.service.UserServiceImpl;
 
-
+/*
+ * A convenience annotation that is itself annotated with @Controller and @ResponseBody. 
+ */
 @RestController
 public class UserController {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
-
+/*
+ * Marks a constructor, field, setter method, or config method as to be automatically
+ * bySpring's dependency injection facilities.
+ */
 	@Autowired
-	private UserServiceImple userService;
+	private UserServiceImpl userService;
 
 	// http://localhost:8082/register
-	@PostMapping("/register")
-	public ResponseEntity<User> register(@RequestBody User appUser) throws DuplicateUserException {
-		LOG.info("Controller register");
-		User app = userService.registerUser(appUser);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "User registered successfully.");
-		ResponseEntity<User> response = new ResponseEntity<User>(app, headers, HttpStatus.CREATED);
-		return response;
-	}
+		@PostMapping("/register")
+		public ResponseEntity<User> register(@RequestBody User appUser) throws DuplicateUserException {
+			LOG.info("register " + appUser.toString());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "User registered successfully.");
+			return new ResponseEntity<User>(userService.registerUser(appUser), headers, HttpStatus.CREATED);
+		}
 
-	// http://localhost:8082/login
-	@PutMapping("/login")
-	public ResponseEntity<User> login(@RequestBody User appUser) throws InvalidLoginCredentialException {
-		LOG.info("Controller login");
-		User app = userService.loginUser(appUser);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "User has loggin successfully.");
-		ResponseEntity<User> response = new ResponseEntity<User>(app, headers, HttpStatus.ACCEPTED);
-		return response;
-	}
+		// http://localhost:8082/login
+		@PostMapping("/login")
+		public ResponseEntity<User> login(@RequestBody User appUser) throws InvalidLoginCredentialException {
+			LOG.info("login " + appUser.toString());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "User logged in successfully.");
+			return new ResponseEntity<User>(userService.loginUser(appUser), headers, HttpStatus.OK);
+		}
 
-	// http://localhost:8082/logout
-	@PutMapping("/logout")
-	public ResponseEntity<User> logout(@RequestBody String userName) throws NoSuchUserException {
-		LOG.info("Controller logout");
-		userService.logout(userName);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "User logged out successfully.");
-		ResponseEntity<User>response=new ResponseEntity<User>(headers,HttpStatus.CREATED);
-		return response;
-	}
-
+		// http://localhost:8082/logout
+		@PostMapping("/logout")
+		public ResponseEntity<String> logout(@RequestBody String userName) throws NoSuchUserException {
+			LOG.info("Controller logout");
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "User logged out successfully.");
+			return new ResponseEntity<String>(userService.logout(userName), headers, HttpStatus.OK);
+		}
+		
 	@PutMapping("/changepassword")
 	public ResponseEntity<User> changepassword(@RequestBody User changepassword)
 			throws InvalidLoginCredentialException {

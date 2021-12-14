@@ -45,7 +45,7 @@ public class Customer  implements Serializable
 	private String lastName;
 	
 	 @Column (name="MOBILE", length = 10, nullable = false, unique = true)
-	private String mobileNumber;
+	private Long mobileNumber;
 	 
 	 @Column(name="email",length = 50, nullable = false, unique = true)
 	private String email;
@@ -64,7 +64,7 @@ public class Customer  implements Serializable
 
 
 	public Customer(int customerId, Long addharNumber, String firstName, String middleName, String lastName,
-			String mobileNumber, String email, String gender) {
+			Long mobileNumber, String email, String gender) {
 		super();
 		this.customerId = customerId;
 		this.addharNumber = addharNumber;
@@ -127,12 +127,12 @@ public class Customer  implements Serializable
 	}
 
 
-	public String getMobileNumber() {
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
 
 
-	public void setMobileNumber(String mobileNumber) {
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 

@@ -25,17 +25,33 @@ public class User {
     @Column(name = "Password")
 	private String password;
 	
+	@Column
+	private Role role;
+	
 	public User() {
 		
 	}
+ 
+	public User( String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		
+	}
+	
+	public User( String userName, String password, Role role) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.role = role;
+	}
 
-	public User(Long userId,
-			@Pattern(regexp = "^([a-zA-Z0-9\\-\\.\\_]+(\\@)([a-zA-Z0-9\\-\\.]+)'+'(\\.)([a-zA-Z]{2,4})$") String userName,
-			@Size(min = 5, max = 10) String password) {
+	public User(Long userId, String userName, String password, Role role) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.password = password;
+		this.role = role;
 	}
 
 	public Long getUserId() {
@@ -62,10 +78,61 @@ public class User {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + "]";
+	public Role getRole() {
+		return role;
 	}
 
-	
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof User)) {
+			return false;
+		}
+		User other = (User) obj;
+		if (password == null) {
+			if (other.password != null) {
+				return false;
+			}
+		} else if (!password.equals(other.password)) {
+			return false;
+		}
+		if (role != other.role) {
+			return false;
+		}
+		if (userName == null) {
+			if (other.userName != null) {
+				return false;
+			}
+		} else if (!userName.equals(other.userName)) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "AppUser [userId=" + userId + ", userName=" + userName + ", password=" + password + ", role=" + role + "]";
+	}
+
 }
+	
+	
+
+	
+
