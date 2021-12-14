@@ -42,7 +42,7 @@ public class CustomerController {
 
 
 	@GetMapping("/getcustomerbyid/{customerId}")
-	public ResponseEntity<Customer> getEmpById(@PathVariable(name = "customerId") Long customerId) throws NoSuchCustomerException {
+	public ResponseEntity<Customer> getEmpById(@PathVariable(name = "customerId") int customerId) throws NoSuchCustomerException {
 		LOG.info("getCustomerById");
 		Customer customername = customerService.viewCustomerProfile(customerId); // line
 		LOG.info(customername.toString());

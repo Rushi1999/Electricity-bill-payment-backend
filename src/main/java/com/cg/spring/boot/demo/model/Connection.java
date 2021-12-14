@@ -31,18 +31,17 @@ public class Connection  implements Serializable{
 	@Id
 	@Column(name = "CONNECTION_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long connectionId;
+	private int connectionId;
 	
 	// customerId auto-generated
     @OneToOne
-    @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+    @JoinColumn(name = "CUSTOMER_ID")
 	private Customer customer;
 //	private int  customer;
 	
-    
-    
+       
 //    @OneToMany
-	@JoinColumn(name = "ADDRESS_ID", nullable = false)
+	@JoinColumn(name = "ADDRESS_ID")
     private Address address;
 //	 private String address;
 	
@@ -73,7 +72,7 @@ public class Connection  implements Serializable{
 		// TODO Auto-generated constructor stub
 	}	
 
-	public Connection(Long connectionId, Customer customer, Address address, ConnectionType connectionType,
+	public Connection(int connectionId, Customer customer, Address address, ConnectionType connectionType,
 			LocalDate applicationDate, LocalDate connectionDate, String connectionStatus) {
 		super();
 		this.connectionId = connectionId;
@@ -87,11 +86,11 @@ public class Connection  implements Serializable{
 
 
 
-	public Long getConnectionId() {
+	public int getConnectionId() {
 		return connectionId;
 	}
 
-	public void setConnectionId(Long connectionId) {
+	public void setConnectionId(int connectionId) {
 		this.connectionId = connectionId;
 	}
 

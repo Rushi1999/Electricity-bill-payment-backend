@@ -45,7 +45,12 @@ class ConnectionServiceImpliment implements  ConnectionService
 	 	  
 	}
   
-
+  @Override
+  public List<Connection>getAllConnection() {
+		System.out.println("Service getAllConnections");
+		return connectionRepository.findAll();
+	}
+  
 	
 
 	@Override
@@ -99,7 +104,7 @@ class ConnectionServiceImpliment implements  ConnectionService
      }
 
 	@Override
-	public Connection findConnectionById(Long connectionId) throws NoSuchConnectionException {
+	public Connection getConnectionById(int connectionId) throws NoSuchConnectionException {
 		Logger.info("getConnectionIdById");
 			Optional<Connection> connection = connectionRepository.findById(connectionId);
 			if (connection.isPresent()) {

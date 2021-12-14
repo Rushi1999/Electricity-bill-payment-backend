@@ -19,17 +19,19 @@ public class CustomerServiceImplemetation  implements CustomerService{
 	
 	@Autowired
 	CustomerRepository customerRepository ;
+	
+	
 	@Override
 	public Customer registerCustomer(Customer customer) throws DuplicateCustomerException {
 		// TODO Auto-generated method stub
 		LOG.info("register");
-		if ( customerRepository.existsById(customer.getCustomerId()))
+		if ( customerRepository.findById(customer.getCustomerId()))
 			throw new DuplicateCustomerException("customer already exists");
 		return customerRepository.save(customer);
 	}
 
 	@Override
-	public Customer viewCustomerProfile(Long CustomerId) throws NoSuchCustomerException {
+	public Customer viewCustomerProfile(int CustomerId) throws NoSuchCustomerException {
 		LOG.info("getCustomerById");
 		Optional<Customer> empOpt = customerRepository.findById(CustomerId);
 		if (empOpt.isPresent()) {
@@ -42,7 +44,7 @@ public class CustomerServiceImplemetation  implements CustomerService{
 	}
 
 	@Override
-	public Customer editCustomerProfile(Integer customerId) throws NoSuchCustomerException {
+	public Customer editCustomerProfile(int customerId) throws NoSuchCustomerException {
 		// TODO Auto-generated method stub
 		/*
 		 * System.out.println("Service updatecustomer "); Optional<Customer> empo =

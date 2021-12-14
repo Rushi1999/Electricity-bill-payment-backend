@@ -44,7 +44,17 @@ public class ConnectionController {
         return new ResponseEntity<Connection>(connectionService.newConnectionRequest(connection), headers, HttpStatus.CREATED);  
     }
     
-    	
+ // http://localhost:8082/connection/getallconnection
+    
+    @GetMapping("/getallconnection")
+	public List<Connection> getAllConnection() {
+		LOG.info("getAllConnection"); // in normal block
+//		LOG.debug("getAllEmps"); // in debug mode 
+		return connectionService.getAllConnection();
+	}
+    
+    
+    
  // http://localhost:8082/connection/modifyConnectionAddress
     
 	@PutMapping("/modifyConnectionAddress")
@@ -79,9 +89,9 @@ public class ConnectionController {
 	
 	// http://localhost:8082/getConnectionbyId/{connectionId}
 	@GetMapping("/getConnectionbyId/{connectionId}")
-	public ResponseEntity<Connection>findConnectionById(@PathVariable(name = "connectionId")Long connectionId) throws NoSuchConnectionException {
+	public ResponseEntity<Connection>getConnectionById(@PathVariable(name = "connectionId")int connectionId) throws NoSuchConnectionException {
 		LOG.info("getConnectionById");
-		Connection connection = connectionService.findConnectionById(connectionId); 
+		Connection connection = connectionService.getConnectionById(connectionId); 
 		LOG.info(connection.toString());
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "This connection is available in the database.");

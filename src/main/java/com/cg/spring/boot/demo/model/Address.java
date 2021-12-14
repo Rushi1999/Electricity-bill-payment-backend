@@ -25,7 +25,7 @@ public class Address  implements Serializable{
 	@Id
 	@Column(name="ADDRESS_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long addressId;
+	private int addressId;
 	 @Column
 	private int flatOrHouseNumber;
 	 @Column
@@ -48,7 +48,7 @@ public class Address  implements Serializable{
 	public Address() {
 		super();
 	}
-	public Address(Long addressId, int flatOrHouseNumber, String buildingName, String landmark, String villageName,
+	public Address(int addressId, int flatOrHouseNumber, String buildingName, String landmark, String villageName,
 			String taluka, String districtName, String state, Long pincode) {
 		super();
 		this.addressId = addressId;
@@ -61,10 +61,10 @@ public class Address  implements Serializable{
 		this.state = state;
 		this.pincode = pincode;
 	}
-	public Long getAddressId() {
+	public int getAddressId() {
 		return addressId;
 	}
-	public void setAddressId(Long addressId) {
+	public void setAddressId(int addressId) {
 		this.addressId = addressId;
 	}
 	public int getFlatOrHouseNumber() {

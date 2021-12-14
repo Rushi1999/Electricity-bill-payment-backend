@@ -30,7 +30,7 @@ public class Customer  implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="CUSTOMER_ID")
-	private Long customerId;
+	private int customerId;
 	
 	 @Column(name="ADDHAR_NUMBER", length = 16, nullable = false, unique = true)
 	private Long addharNumber;
@@ -56,9 +56,6 @@ public class Customer  implements Serializable
 	private String gender;
 
 	
-	
-	
-	
 
 	public Customer() {
 		super();
@@ -66,7 +63,7 @@ public class Customer  implements Serializable
 	}
 
 
-	public Customer(Long customerId, Long addharNumber, String firstName, String middleName, String lastName,
+	public Customer(int customerId, Long addharNumber, String firstName, String middleName, String lastName,
 			String mobileNumber, String email, String gender) {
 		super();
 		this.customerId = customerId;
@@ -80,12 +77,12 @@ public class Customer  implements Serializable
 	}
 
 
-	public Long getCustomerId() {
+	public int getCustomerId() {
 		return customerId;
 	}
 
 
-	public void setCustomerId(Long customerId) {
+	public void setCustomerId(int customerId) {
 		this.customerId = customerId;
 	}
 

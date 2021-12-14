@@ -11,7 +11,12 @@ public interface ConnectionService {
 	public Connection modifyConnectionAddress(Connection connection) throws NoSuchConnectionException;
 	public Connection modifyConnection(Connection connection) throws NoSuchConnectionException;
 	public List<Connection> findConnectionsByPincode(Long pincode) throws NoSuchConnectionException;
-	public Connection findConnectionById(Long connectionId) throws NoSuchConnectionException;
+	public Connection getConnectionById(int connectionId) throws NoSuchConnectionException;
+//	public Connection getConnectionById(int connectionId);
+//	public List<Connection> getAllConnection();
+	
+	public List<Connection> getAllConnection();
+	
 	
 	
 }
