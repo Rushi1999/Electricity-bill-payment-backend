@@ -25,8 +25,8 @@ public class CustomerServiceImplemetation  implements CustomerService{
 	public Customer registerCustomer(Customer customer) throws DuplicateCustomerException {
 		// TODO Auto-generated method stub
 		LOG.info("register");
-//		if ( customerRepository.findById(customer.getCustomerId()))
-//			throw new DuplicateCustomerException("customer already exists");
+		if ( customerRepository.findById(customer.getCustomerId()))
+			throw new DuplicateCustomerException("customer already exists");
 		return customerRepository.save(customer);
 	}
 
