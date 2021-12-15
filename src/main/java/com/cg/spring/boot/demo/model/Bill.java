@@ -24,6 +24,10 @@ public class Bill {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "reading", referencedColumnName = "readingId")
 	private Reading reading;
+	
+	@OneToOne
+	@JoinColumn(name = "customerId")
+	private Customer customer;
 
 	@Column
 	private LocalDate billDate;

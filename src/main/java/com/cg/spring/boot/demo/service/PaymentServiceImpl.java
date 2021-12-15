@@ -22,7 +22,7 @@ public class PaymentServiceImpl implements PaymentService {
 	private PaymentRepository paymentRepo;
 	
 	@Override
-	public PaymentStatus payBill(Long paymentId) {
+	public PaymentStatus payBill(Long paymentId) throws NoSuchCustomerException {
 		LOG.info("payBill");
 		Optional<Payment> paymentOpt = paymentRepo.findById(paymentId);
 		if (paymentOpt.isPresent()) {
@@ -30,15 +30,16 @@ public class PaymentServiceImpl implements PaymentService {
 			return ((Payment) paymentRepo).getStatus();
 		} else {
 			LOG.info(" Failed");
+			throw new NoSuchCustomerException("Payment Failed");
 		}
-		return null;
+//		return null;
 	}
 
 //	
 
 	@Override
-	public List<Payment> viewHistoricalPayment(int consumerNumber) throws NoSuchCustomerException{
-		List<Payment> list = paymentRepo.findByConsumerNumber(consumerNumber);
+	public List<Payment> viewHistoricalPayment(Long customerId) throws NoSuchCustomerException{
+		List<Payment> list = paymentRepo.findByCustomer_customerId(customerId);
 		if (!list.isEmpty()) {
 			LOG.info("find all historical payment");
 			return list;
@@ -46,20 +47,23 @@ public class PaymentServiceImpl implements PaymentService {
 		else {
 		LOG.error("No such record found");
 		throw new NoSuchCustomerException("No such record found");
+//		return null;
 		}
+		
+	
 	}
-
+	
 	@Override
 	public void sendEmailOnPaymentCompletion(Long paymentId, String email) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public List<Payment> viewHistoricalPayment(Long paymentId) throws NoSuchCustomerException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public List<Payment> viewHistoricalPayment(Long paymentId) throws NoSuchCustomerException {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 }
 

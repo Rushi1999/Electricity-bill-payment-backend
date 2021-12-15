@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.spring.boot.demo.exception.NoSuchConsumerNumberException;
 import com.cg.spring.boot.demo.exception.NoSuchCustomerException;
 import com.cg.spring.boot.demo.model.Payment;
 import com.cg.spring.boot.demo.model.PaymentStatus;
@@ -31,7 +32,7 @@ public class PaymentController {
 	private PaymentServiceImpl paymentService;
 
 	@GetMapping("getPaymentStatus")
-	public ResponseEntity<PaymentStatus> payBill(@RequestBody Long paymentId) {
+	public ResponseEntity<PaymentStatus> payBill(@RequestBody Long paymentId) throws NoSuchCustomerException {
 		LOG.info("getPaymentById");
 		PaymentStatus payment1 = paymentService.payBill(paymentId); // line
 		HttpHeaders headers = new HttpHeaders();
@@ -41,15 +42,17 @@ public class PaymentController {
 		return response;
 	}
 
-	@GetMapping(path = "/readhistoricalpayment/{consumernumber}")
+	@GetMapping(path = "/readhistoricalpayment/{consumerNumber}")
 	public ResponseEntity<List<Payment>> readHistoricalPayment(
-			@PathVariable(name = "consumernumber") int consumerNumber) throws NoSuchCustomerException// throws NoSuchCustomerException
-	{
+			@PathVariable(name = "customerId") Long customerId)
+					throws NoSuchCustomerException	{
 		LOG.info("readHistoricalPayment");
-		List<Payment> list = paymentService.viewHistoricalPayment(consumerNumber);
+		ResponseEntity<List<Payment>> response = null;
+		List<Payment> list = paymentService.viewHistoricalPayment(customerId);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "FeedBack added to database");
-		ResponseEntity<List<Payment>> response = new ResponseEntity<>(list, headers, HttpStatus.CREATED);
+//		ResponseEntity<List<Payment>> response = new ResponseEntity<Payment>(list, headers, HttpStatus.CREATED);
+		response = new ResponseEntity<List<Payment>>(list, HttpStatus.CREATED);
 		return response;
 
 	}

@@ -1,6 +1,7 @@
 package com.cg.spring.boot.demo.controller;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +43,7 @@ public class ReadingController {
 	public ResponseEntity<Reading> getreadingbynumberandbilldate(Long consumerNumber, @PathVariable LocalDate billDate)
 			throws NoSuchCustomerException {
 		LOG.info("getreadingbynumberandbilldate");
-		Reading readingId = new Reading(null, null, 0, null, null, 0); // line
+		Reading readingId = readingService.getreadMeterReadingByConsumerNumberAndBillDate(consumerNumber, billDate); // line
 		LOG.info(readingId.toString());
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "This consumerNumber and BillDate is available in the database.");
@@ -53,15 +54,15 @@ public class ReadingController {
 
 	// http://localhost:8082/readMeterReadingByConsumerNumber
 	@GetMapping("/readmeterbynumber/{Number}")
-	public ResponseEntity<Reading> readMeterReadingByConsumerNumber(Long consumerNumber, @PathVariable Long Number)
+	public ResponseEntity<Reading> readMeterReadingByConsumerNumber(@PathVariable Long consumerNumber)
 			throws NoSuchCustomerException {
 		LOG.info("readmeterbynumber");
-		Reading consumerNumber1 = new Reading(null, null, 0, null, null, 0); // line
-		LOG.info(consumerNumber1.toString());
+		List<Reading> reading = readingService.getreadMeterReadingByConsumerNumber(consumerNumber); // line
 		HttpHeaders headers = new HttpHeaders();
+		LOG.info(headers.toString());
 		headers.add("message", "This consumerNumber is available in the database.");
 		LOG.info(headers.toString());
-		ResponseEntity<Reading> response = new ResponseEntity<Reading>(consumerNumber1, headers, HttpStatus.OK);
+		ResponseEntity<Reading> response = new ResponseEntity<Reading>((Reading) reading, headers, HttpStatus.OK);
 		return response;
 	}
 }

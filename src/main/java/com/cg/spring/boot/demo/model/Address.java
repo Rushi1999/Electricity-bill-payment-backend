@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Scope("prototype")
-@Component("address")
+//@Scope("prototype")
+//@Component("address")
 @Entity
 @Table(name = "ADDRESS") 
 public class Address  implements Serializable{

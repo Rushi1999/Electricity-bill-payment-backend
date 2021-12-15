@@ -10,8 +10,11 @@ public interface PaymentService {
 		
 //	public PaymentStatus payBill(Payment payment);
 	public void sendEmailOnPaymentCompletion(Long paymentId, String email);
-	public List<Payment> viewHistoricalPayment(Long paymentId) throws NoSuchCustomerException;
-	public PaymentStatus payBill(Long paymentId);
-	List<Payment> viewHistoricalPayment(int consumerNumber) throws NoSuchCustomerException;
+	
+//	public List<Payment> viewHistoricalPayment(Long paymentId) throws NoSuchCustomerException;
+	
+	public PaymentStatus payBill(Long paymentId) throws NoSuchCustomerException;
+	
+	public List<Payment> viewHistoricalPayment(Long consumerNumber) throws NoSuchCustomerException;
 	 
 }

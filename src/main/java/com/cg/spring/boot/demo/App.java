@@ -21,6 +21,7 @@ public class App {
 		LOG.info("End");
 	}
 	
+	
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
@@ -31,10 +32,3 @@ public class App {
 		};
 	}
 }
-
-
-
-
-
-
-

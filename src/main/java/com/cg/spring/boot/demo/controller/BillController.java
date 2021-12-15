@@ -36,8 +36,9 @@ public class BillController {
 	
 	
 	// http://localhost:8082/viewBillByConsumerNumber/
-	@GetMapping("/viewBillByConsumerNumber/{consumerNumber}")
-	public ResponseEntity<Bill> viewBillByConsumerNumber(@PathVariable(name = "consumerNumber")Long consumerNumber) 
+	@GetMapping(path = "/viewBillByConsumerNumber/{consumerNumber}")
+	public ResponseEntity<Bill> viewBillByConsumerNumber(
+			@PathVariable(name = "consumerNumber")Long consumerNumber) 
 			throws NoSuchConsumerNumberException {
 		LOG.info("viewBillByConsumerNumber");
 		Bill bill = billService.viewBillByConsumerNumber(consumerNumber);

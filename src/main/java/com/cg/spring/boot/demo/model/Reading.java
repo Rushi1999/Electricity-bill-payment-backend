@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,8 +26,8 @@ public class Reading {
 //	@JoinColumn(name ="connectionId")
 //	private Connection readingForConnection;
 	
-	@ManyToOne
-	@JoinColumn(name = "CONSUMER_NUMBER")
+	@OneToOne
+	@JoinColumn(name = "CONNECTION_ID")
 	private Connection connection;
 	
 	@ManyToOne
@@ -57,11 +58,12 @@ public class Reading {
 	}
 
 
-	public Reading(Long readingId, Connection consumerNumber, int unitsConsumed, Long reading, LocalDate readingDate,
-			int pricePerUnits) {
+	public Reading(Long readingId, Connection connection, Bill bill, int unitsConsumed, Long reading,
+			LocalDate readingDate, int pricePerUnits) {
 		super();
 		this.readingId = readingId;
-		this.connection = consumerNumber;
+		this.connection = connection;
+		this.bill = bill;
 		this.unitsConsumed = unitsConsumed;
 		this.reading = reading;
 		this.readingDate = readingDate;
@@ -79,13 +81,23 @@ public class Reading {
 	}
 
 
-	public Connection getConsumerNumber() {
+	public Connection getConnection() {
 		return connection;
 	}
 
 
-	public void setConsumerNumber(Connection consumerNumber) {
-		this.connection = consumerNumber;
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+
+	public Bill getBill() {
+		return bill;
+	}
+
+
+	public void setBill(Bill bill) {
+		this.bill = bill;
 	}
 
 
@@ -131,10 +143,13 @@ public class Reading {
 
 	@Override
 	public String toString() {
-		return "Reading [readingId=" + readingId + ", consumerNumber=" + connection + ", unitsConsumed="
+		return "Reading [readingId=" + readingId + ", connection=" + connection + ", bill=" + bill + ", unitsConsumed="
 				+ unitsConsumed + ", reading=" + reading + ", readingDate=" + readingDate + ", pricePerUnits="
 				+ pricePerUnits + "]";
 	}
 
+
 	
+
+
 }

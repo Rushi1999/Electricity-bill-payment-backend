@@ -1,14 +1,12 @@
 package com.cg.spring.boot.demo.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import com.cg.spring.boot.demo.model.Payment;
-import com.cg.spring.boot.demo.model.PaymentMode;
-import com.cg.spring.boot.demo.model.PaymentStatus;
 
 
 
@@ -19,12 +17,14 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
 //	Optional<Payment> exists(Long consumerNumber);
 	
-	@Query(name = "SELECT c FROM Customer c WHERE c.bill.Connection.consumerNumber = ?1")
-	public abstract List<Payment> findByConsumerNumber(int consumerNumber);
+//	@Query(value = "SELECT c FROM Customer c WHERE c.Bill.Reading.Connection.consumerNumber = ?1")
+//	public List<Payment> findByConsumerNumber(Long consumerNumber);
+	public abstract List<Payment> findByCustomer_customerId(Long customerId);
 
 //	List<Payment> findAllById(Long consumerNumber);
 	
-	public Payment findByPaymentId(Long partyId);
+	
+	public Payment findByPaymentId(Long paymentId);
 //	PaymentStatus getStatus();
 
 //	boolean exists(Payment payment);
