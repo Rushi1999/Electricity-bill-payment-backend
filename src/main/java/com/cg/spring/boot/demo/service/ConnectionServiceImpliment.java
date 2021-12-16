@@ -4,6 +4,8 @@ import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.cg.spring.boot.demo.exception.DuplicateUserException;
 import  com.cg.spring.boot.demo.exception.NoSuchConnectionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,18 +34,20 @@ class ConnectionServiceImpliment implements  ConnectionService
 	{
   
 	  if (!connectionRepository.existsById(connection.getConnectionId())) {
-			if (connection.getCustomer() != null)
+			if (connection.getCustomer() != null && connection.getAddress()!=null)
 				return connectionRepository.save(connection);
-			else if (connectionRepository.existsById(connection.getCustomer().getCustomerId()))
+			else if (connectionRepository.existsById(connection.getCustomer().getCustomerId()) && connectionRepository.existsById(connection.getAddress().getAddressId()))
 				return connectionRepository.save(connection);
+//			else if (connectionRepository.existsById(connection.getAddress().getAddressId()))
+//				return connectionRepository.save(connection);
 			else
-				throw new NoSuchConnectionException(
-						"customer with customerId " + connection.getCustomer().getCustomerId() + " does not exist.");
+				throw new NoSuchConnectionException("customer with customerId " + connection.getCustomer().getCustomerId() + " does not exist.");
 		} else
 			throw new NoSuchConnectionException("connection with connectionId " + connection.getConnectionId() + " already exists.");
-	  
-	 	  
+	  	  
 	}
+  
+	
   
   @Override
   public List<Connection>getAllConnection() {
@@ -90,12 +94,13 @@ class ConnectionServiceImpliment implements  ConnectionService
 	
 	
 	@Override
-	public List<Connection> findConnectionsByPincode(Long pincode) throws NoSuchConnectionException {
+	public List<Connection> getConnectionsByPincode(Long pincode) throws NoSuchConnectionException {
 		Logger.info("getConnectionsByPincode");
-		Optional custOpt = addressRepository.findById(pincode);
-		if (custOpt.isPresent()) {
+		Optional connection = addressRepository.findById(pincode);
+//		Optional <Connection> connection = connectionRepository.findById(pincode);
+		if (connection.isPresent()) {
 			Logger.info("Cunsumer is available.");
-			return (List<Connection>) custOpt.get();
+			return (List<Connection>) connection.get();
 		} else {
 			
 			throw new NoSuchConnectionException( " this cunsumer is not found.");
@@ -115,7 +120,11 @@ class ConnectionServiceImpliment implements  ConnectionService
 				throw new NoSuchConnectionException(connectionId + " this connection is not found.");
 			}		
 
-	}	
+	}
+
+
+
+
 	
 	
 }

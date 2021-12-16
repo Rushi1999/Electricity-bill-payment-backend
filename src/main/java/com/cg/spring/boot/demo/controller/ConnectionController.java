@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
 import com.cg.spring.boot.demo.model.Connection;
+
 import com.cg.spring.boot.demo.service.ConnectionService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -74,11 +75,19 @@ public class ConnectionController {
 	
 //	public List<Connection> findConnectionsByPincode(String pincode)throws NoSuchConnectionException;
 	
-	// http://localhost:8082/getConnectionbypincode/{pincode}
+	// http://localhost:8082/connection/getConnectionbypincode/{pincode}
+	
 	@GetMapping("/getConnectionbypincode/{pincode}")
-	public ResponseEntity<Connection> findActiveConnectionsByPincode(@PathVariable(name = "pincode")Long pincode) throws NoSuchConnectionException {
+	
+//	public List<Connection> getEmpBySalaryInBetween(Long pincode) {
+//		LOG.info("getEmployeeBySalaryInBetween");
+//		return connectionService.getConnectionByPincode(pincode);
+//	}
+	
+	
+	public ResponseEntity<Connection> getConnectionsByPincode(@PathVariable(name = "pincode")Long pincode) throws NoSuchConnectionException {
 		LOG.info("getConnectionByPincode");
-		List<Connection> connection = connectionService.findConnectionsByPincode(pincode); 
+		List<Connection> connection = connectionService. getConnectionsByPincode(pincode); 
 		LOG.info(connection.toString());
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "This connections is available in the database.");
