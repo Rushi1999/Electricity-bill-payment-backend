@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.cg.spring.boot.demo.model.Connection;
 import com.cg.spring.boot.demo.repository.ConnectionRespository;
-import com.cg.spring.boot.demo.repository.AddressRespository;
 
 //import logging.GlobalResources;
 
@@ -25,8 +24,8 @@ class ConnectionServiceImpliment implements  ConnectionService
 	 @Autowired
 	    private ConnectionRespository connectionRepository;
 	 
-	 @Autowired
-	    private AddressRespository addressRepository;
+//	 @Autowired
+//	    private AddressRespository addressRepository;
 	 
 
   @Override
@@ -34,9 +33,9 @@ class ConnectionServiceImpliment implements  ConnectionService
 	{
   
 	  if (!connectionRepository.existsById(connection.getConnectionId())) {
-			if (connection.getCustomer() != null && connection.getAddress()!=null)
+			if (connection.getCustomer() != null )
 				return connectionRepository.save(connection);
-			else if (connectionRepository.existsById(connection.getCustomer().getCustomerId()) && connectionRepository.existsById(connection.getAddress().getAddressId()))
+			else if (connectionRepository.existsById(connection.getCustomer().getCustomerId()) )
 				return connectionRepository.save(connection);
 //			else if (connectionRepository.existsById(connection.getAddress().getAddressId()))
 //				return connectionRepository.save(connection);
@@ -94,17 +93,16 @@ class ConnectionServiceImpliment implements  ConnectionService
 	
 	
 	@Override
-	public List<Connection> getConnectionsByPincode(Long pincode) throws NoSuchConnectionException {
-		Logger.info("getConnectionsByPincode");
-		Optional connection = addressRepository.findById(pincode);
-//		Optional <Connection> connection = connectionRepository.findById(pincode);
+	public List<Connection> getConnectionsByPincode(int pincode) throws NoSuchConnectionException {
+		Logger.info("getConnectionIdByPincode");
+		Optional<Connection> connection = connectionRepository.findById(pincode);
 		if (connection.isPresent()) {
-			Logger.info("Cunsumer is available.");
+			Logger.info("Connection is available.");
 			return (List<Connection>) connection.get();
 		} else {
-			
-			throw new NoSuchConnectionException( " this cunsumer is not found.");
-		}
+			Logger.error("connection is NOT available.");
+			throw new NoSuchConnectionException(pincode + " this connection is not found.");
+		}		
 	
      }
 

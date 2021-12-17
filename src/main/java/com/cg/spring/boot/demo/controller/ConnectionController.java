@@ -56,6 +56,7 @@ public class ConnectionController {
     
     
     
+    
  // http://localhost:8082/connection/modifyConnectionAddress
     
 	@PutMapping("/modifyConnectionAddress")
@@ -77,15 +78,15 @@ public class ConnectionController {
 	
 	// http://localhost:8082/connection/getConnectionbypincode/{pincode}
 	
-	@GetMapping("/getConnectionbypincode/{pincode}")
+//	@GetMapping("/getConnectionbypincode/{pincode}")
 	
 //	public List<Connection> getEmpBySalaryInBetween(Long pincode) {
 //		LOG.info("getEmployeeBySalaryInBetween");
 //		return connectionService.getConnectionByPincode(pincode);
 //	}
 	
-	
-	public ResponseEntity<Connection> getConnectionsByPincode(@PathVariable(name = "pincode")Long pincode) throws NoSuchConnectionException {
+	@GetMapping("/getConnectionbypincode/{pincode}")
+	public ResponseEntity<Connection> getConnectionsByPincode(@PathVariable(name = "pincode")int pincode) throws NoSuchConnectionException {
 		LOG.info("getConnectionByPincode");
 		List<Connection> connection = connectionService. getConnectionsByPincode(pincode); 
 		LOG.info(connection.toString());

@@ -18,7 +18,8 @@ public interface ConnectionService {
 	public List<Connection> getAllConnection();
 
 //	@Query(value = "SELECT c FROM Reading c WHERE c.connection.pincode = ?1")
-	public List<Connection> getConnectionsByPincode(Long pincode) throws NoSuchConnectionException;
+	//public List<Connection> getConnectionsByPincode(Long pincode) throws NoSuchConnectionException;
+	List<Connection> getConnectionsByPincode(int pincode) throws NoSuchConnectionException;
 	
 	
 	

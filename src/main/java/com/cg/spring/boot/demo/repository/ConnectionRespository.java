@@ -1,5 +1,6 @@
 package com.cg.spring.boot.demo.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,11 +20,13 @@ public interface ConnectionRespository extends JpaRepository<Connection, Integer
 //	public Connection updateConnection(Connection connection);
 //	public Connection findByConnectionId(int connectionId);
 	
-	
+  public List<Connection> getByPincode(int pincode);
 //	public Connection newConnectionRequest(Connection newConnection);
 //	public Connection modifyConnectionAddress(Connection connection);
 //	public Connection modifyConnection(Connection connection);
 //	public Connection getConnectionById(int connectionId);
+
+//	public Optional<Connection> getById(Long pincode);
 
 
 	
