@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
 import com.cg.spring.boot.demo.model.Connection;
-
 import com.cg.spring.boot.demo.service.ConnectionService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,8 +30,7 @@ public class ConnectionController {
     private static final Logger LOG = LoggerFactory.getLogger(ConnectionController.class);
 
     @Autowired
-    private ConnectionService connectionService;
-    
+    private ConnectionService connectionService; 
     
  // http://localhost:8082/registerCustomer
     @PostMapping("/addConnection")
@@ -53,17 +51,15 @@ public class ConnectionController {
 //		LOG.debug("getAllEmps"); // in debug mode 
 		return connectionService.getAllConnection();
 	}
-    
-    
-    
+       
     
  // http://localhost:8082/connection/modifyConnectionAddress
     
-	@PutMapping("/modifyConnectionAddress")
-	public Connection updateAddress(@RequestBody Connection connection) throws NoSuchConnectionException {
-		LOG.info("Controller updateConnectionAdddress");
-		return connectionService.modifyConnectionAddress(connection);
-	}
+//	@PutMapping("/modifyConnectionAddress")
+//	public Connection updateAddress(@RequestBody Connection connection) throws NoSuchConnectionException {
+//		LOG.info("Controller updateConnectionAdddress");
+//		return connectionService.modifyConnectionAddress(connection);
+//	}
 	
 	// http://localhost:8082/modifyConnection
 	@PutMapping("/modifyConnection")
@@ -71,19 +67,6 @@ public class ConnectionController {
 		System.out.println("Controller updateConnection");
 		return connectionService. modifyConnection(connection);
 	}
-	
-	
-	
-//	public List<Connection> findConnectionsByPincode(String pincode)throws NoSuchConnectionException;
-	
-	// http://localhost:8082/connection/getConnectionbypincode/{pincode}
-	
-//	@GetMapping("/getConnectionbypincode/{pincode}")
-	
-//	public List<Connection> getEmpBySalaryInBetween(Long pincode) {
-//		LOG.info("getEmployeeBySalaryInBetween");
-//		return connectionService.getConnectionByPincode(pincode);
-//	}
 	
 	@GetMapping("/getConnectionbypincode/{pincode}")
 	public ResponseEntity<Connection> getConnectionsByPincode(@PathVariable(name = "pincode")int pincode) throws NoSuchConnectionException {

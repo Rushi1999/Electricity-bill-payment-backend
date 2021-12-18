@@ -11,7 +11,7 @@ import com.cg.spring.boot.demo.service.ConnectionService;
 public interface ConnectionService {
 
 	public Connection newConnectionRequest(Connection newConnection) throws NoSuchConnectionException;
-	public Connection modifyConnectionAddress(Connection connection) throws NoSuchConnectionException;
+	//public Connection modifyConnectionAddress(Connection connection) throws NoSuchConnectionException;
 	public Connection modifyConnection(Connection connection) throws NoSuchConnectionException;
 	public Connection getConnectionById(int connectionId) throws NoSuchConnectionException;
 //	public Connection getConnectionById(int connectionId);

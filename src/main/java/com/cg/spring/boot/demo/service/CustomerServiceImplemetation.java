@@ -23,13 +23,19 @@ public class CustomerServiceImplemetation  implements CustomerService{
 	
 	@Override
 	public Customer registerCustomer(Customer customer) throws DuplicateCustomerException {
-		// TODO Auto-generated method stub
 		LOG.info("register");
-		if ( customerRepository.findById(customer.getCustomerId()))
-			throw new DuplicateCustomerException("customer already exists");
-		return customerRepository.save(customer);
+		if (null != customerRepository.findById(customer.getCustomerId()))
+			return customerRepository.save(customer);
+		throw new  DuplicateCustomerException ("This customer is already registered");
 	}
 
+	
+	@Override
+	public List<Customer> getAllCustomer() {
+			System.out.println("Service getAllCustomer");
+			return customerRepository.findAll();
+		}
+	
 	@Override
 	public Customer viewCustomerProfile(int CustomerId) throws NoSuchCustomerException {
 		LOG.info("getCustomerById");

@@ -34,15 +34,26 @@ public class CustomerController {
 	private CustomerService customerService;
 	//@Autowired
 	//private AddressRespository  addressRespository ;
+	
+	
+	
 
-	// http://localhost:8082/registerCustomer
-	@PostMapping("/registerCustomer")
-	public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) throws DuplicateCustomerException {
-		LOG.info("Controller register");
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "User registered successfully.");
-		return new ResponseEntity<Customer>(customerService.registerCustomer(customer), headers, HttpStatus.CREATED);
-	}
+	// http://localhost:8082/customer/registerCustomer
+		@PostMapping("/registerCustomer")
+		public ResponseEntity<Customer> registerCustomer(@RequestBody Customer customer) throws DuplicateCustomerException {
+			LOG.info("Controller register"+ customer.toString());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "User registered successfully.");
+			return new ResponseEntity<Customer>(customerService.registerCustomer(customer), headers, HttpStatus.CREATED);
+		}
+		
+		
+		@GetMapping("/getallcustomer")
+		public List<Customer> getAllCustomer() {
+			LOG.info("getAllCustomer"); // in normal block
+//			LOG.debug("getAllCustomer"); // in debug mode 
+			return customerService.getAllCustomer();
+		}
 
 
 	@GetMapping("/getcustomerbyid/{customerId}")

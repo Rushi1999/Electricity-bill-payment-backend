@@ -22,6 +22,8 @@ public class Reading {
 	@Column
 	private Long readingId;
 
+	
+	
 //	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	@JoinColumn(name ="connectionId")
 //	private Connection readingForConnection;

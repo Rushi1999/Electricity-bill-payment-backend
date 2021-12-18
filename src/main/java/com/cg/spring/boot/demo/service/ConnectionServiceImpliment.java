@@ -24,9 +24,6 @@ class ConnectionServiceImpliment implements  ConnectionService
 	 @Autowired
 	    private ConnectionRespository connectionRepository;
 	 
-//	 @Autowired
-//	    private AddressRespository addressRepository;
-	 
 
   @Override
 	public Connection newConnectionRequest(Connection connection) throws NoSuchConnectionException 
@@ -37,14 +34,15 @@ class ConnectionServiceImpliment implements  ConnectionService
 				return connectionRepository.save(connection);
 			else if (connectionRepository.existsById(connection.getCustomer().getCustomerId()) )
 				return connectionRepository.save(connection);
-//			else if (connectionRepository.existsById(connection.getAddress().getAddressId()))
-//				return connectionRepository.save(connection);
 			else
 				throw new NoSuchConnectionException("customer with customerId " + connection.getCustomer().getCustomerId() + " does not exist.");
-		} else
+		
+	  } else
 			throw new NoSuchConnectionException("connection with connectionId " + connection.getConnectionId() + " already exists.");
 	  	  
 	}
+  
+  
   
 	
   
@@ -72,25 +70,23 @@ class ConnectionServiceImpliment implements  ConnectionService
 	}
 
 
-	@Override
+//	@Override
 	
-	public Connection modifyConnectionAddress(Connection connection) throws NoSuchConnectionException {
-		
-			if (connectionRepository.existsById(connection.getConnectionId()))
-			{
-				Logger.info("Service update Connection Address");
-				return connectionRepository.save(connection);	
-			}
-			else
-			{
-				Logger.error("Connection Not Found");
-				throw new NoSuchConnectionException("Connection not found");
-
-			}				
-		
-	}
-	
-	
+//	public Connection modifyConnectionAddress(Connection connection) throws NoSuchConnectionException {
+//		
+//			if (connectionRepository.existsById(connection.getConnectionId()))
+//			{
+//				Logger.info("Service update Connection Address");
+//				return connectionRepository.save(connection);	
+//			}
+//			else
+//			{
+//				Logger.error("Connection Not Found");
+//				throw new NoSuchConnectionException("Connection not found");
+//
+//			}				
+//		
+//	}
 	
 	@Override
 	public List<Connection> getConnectionsByPincode(int pincode) throws NoSuchConnectionException {
@@ -118,11 +114,6 @@ class ConnectionServiceImpliment implements  ConnectionService
 				throw new NoSuchConnectionException(connectionId + " this connection is not found.");
 			}		
 
-	}
-
-
-
-
-	
+	}	
 	
 }

@@ -21,6 +21,7 @@ public interface CustomerService {
 	
 	public List<Customer> searchCustomerByName(String firstName)throws NoSuchCustomerException;
 	Customer editCustomerProfile(int customerId) throws NoSuchCustomerException;
+	List<Customer> getAllCustomer();
 	
 
 	
