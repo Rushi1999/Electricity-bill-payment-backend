@@ -31,8 +31,8 @@ public interface ReadingRepository extends JpaRepository<Reading, Long> {
 	public Reading submitReading(Long reading);
 	
 
-	@Query(value = "SELECT r FROM Reading r WHERE r.connection.consumerNumber= ?1 AND r.bill.billDate= ?2")
-	public Reading readMeterReadingByConsumerNumberAndBillDate(Long consumerNumber, LocalDate billDate);
+//	@Query(value = "SELECT r FROM Reading r WHERE r.connection.consumerNumber= ?1 AND r.bill.billDate= ?2")
+//	public Reading readMeterReadingByConsumerNumberAndBillDate(Long consumerNumber, LocalDate billDate);
 	
 	@Query(value = "SELECT r FROM Reading r WHERE r.connection.consumerNumber = ?1")
 	public List<Reading> readMeterReadingByConsumerNumber(Long consumerNumber);

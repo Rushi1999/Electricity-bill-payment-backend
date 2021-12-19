@@ -24,7 +24,7 @@ public class Payment {
 	private static final long serialVersionUID = 1L;
 
 	// should be auto-generated
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long paymentId;
@@ -45,9 +45,6 @@ public class Payment {
 	private PaymentMode paymentMode;
 	
 	@Column
-	private double latePaymentCharges;
-	
-	@Column
 	private double totalPaid;
 	
 	@Column
@@ -63,8 +60,22 @@ public class Payment {
 	}
 
 
+	
 
-	public Payment(Long paymentId, Bill bill, LocalDate paymentDate, PaymentMode paymentMode, double latePaymentCharges,
+	public Payment(Customer customer, LocalDate paymentDate, PaymentMode paymentMode, double totalPaid,
+			@Pattern(regexp = "^[S|F]{1}$", message = "Must be Success or Failed") PaymentStatus status) {
+		super();
+		this.customer = customer;
+		this.paymentDate = paymentDate;
+		this.paymentMode = paymentMode;
+		this.totalPaid = totalPaid;
+		this.status = status;
+	}
+
+
+
+
+	public Payment(Long paymentId, Bill bill, LocalDate paymentDate, PaymentMode paymentMode,
 			double totalPaid,
 			@Pattern(regexp = "^[S|F]{1}$", message = "Must be Success or Failed") PaymentStatus status) {
 		super();
@@ -72,7 +83,6 @@ public class Payment {
 		this.bill = bill;
 		this.paymentDate = paymentDate;
 		this.paymentMode = paymentMode;
-		this.latePaymentCharges = latePaymentCharges;
 		this.totalPaid = totalPaid;
 		this.status = status;
 	}
@@ -126,19 +136,6 @@ public class Payment {
 	}
 
 
-
-	public double getLatePaymentCharges() {
-		return latePaymentCharges;
-	}
-
-
-
-	public void setLatePaymentCharges(double latePaymentCharges) {
-		this.latePaymentCharges = latePaymentCharges;
-	}
-
-
-
 	public double getTotalPaid() {
 		return totalPaid;
 	}
@@ -160,22 +157,13 @@ public class Payment {
 	public void setStatus(PaymentStatus status) {
 		this.status = status;
 	}
-
-
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-
-
+	
 	@Override
 	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", bill=" + bill + ", paymentDate=" + paymentDate + ", paymentMode="
-				+ paymentMode + ", latePaymentCharges=" + latePaymentCharges + ", totalPaid=" + totalPaid + ", status="
-				+ status + "]";
+		return "Payment [paymentId=" + paymentId + ", bill=" + bill + ", customer=" + customer + ", paymentDate="
+				+ paymentDate + ", paymentMode=" + paymentMode + ", totalPaid=" + totalPaid + ", status=" + status
+				+ "]";
 	}
-	
-	
+
 	
 }

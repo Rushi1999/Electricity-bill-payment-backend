@@ -71,7 +71,7 @@ public class Connection implements Serializable {
 	private String state;
 	 
 	 @Column
-	private int pincode;
+	private Long pincode;
 	
 
 	@Column(name = "CONNECTION_TYPE")
@@ -104,8 +104,34 @@ public class Connection implements Serializable {
 	
 	
 
+	
+
+
+
+	public Connection(int connectionId, Long consumerNumber, int flatOrHouseNumber, String buildingName,
+			String landmark, String villageName, String taluka, String districtName, String state, Long pincode,
+			ConnectionType connectionType, LocalDate applicationDate, LocalDate connectionDate,
+			String connectionStatus) {
+		super();
+		this.connectionId = connectionId;
+		this.consumerNumber = consumerNumber;
+		this.flatOrHouseNumber = flatOrHouseNumber;
+		this.buildingName = buildingName;
+		this.landmark = landmark;
+		this.villageName = villageName;
+		this.taluka = taluka;
+		this.districtName = districtName;
+		this.state = state;
+		this.pincode = pincode;
+		this.connectionType = connectionType;
+		this.applicationDate = applicationDate;
+		this.connectionDate = connectionDate;
+		this.connectionStatus = connectionStatus;
+	}
+
+
 	public Connection(Customer customer, int flatOrHouseNumber, String buildingName, String landmark,
-			String villageName, String taluka, String districtName, String state, int pincode,
+			String villageName, String taluka, String districtName, String state, Long pincode,
 			ConnectionType connectionType, LocalDate applicationDate, LocalDate connectionDate,
 			String connectionStatus) {
 		super();
@@ -127,7 +153,7 @@ public class Connection implements Serializable {
 
 
 	public Connection(int flatOrHouseNumber, String buildingName, String landmark, String villageName, String taluka,
-			String districtName, String state, int pincode, ConnectionType connectionType, LocalDate applicationDate,
+			String districtName, String state, Long pincode, ConnectionType connectionType, LocalDate applicationDate,
 			LocalDate connectionDate, String connectionStatus) {
 		super();
 		this.flatOrHouseNumber = flatOrHouseNumber;
@@ -148,7 +174,7 @@ public class Connection implements Serializable {
 
 	public Connection(int connectionId, Customer customer, Long consumerNumber, int flatOrHouseNumber,
 			String buildingName, String landmark, String villageName, String taluka, String districtName, String state,
-			int pincode, ConnectionType connectionType, LocalDate applicationDate, LocalDate connectionDate,
+			Long pincode, ConnectionType connectionType, LocalDate applicationDate, LocalDate connectionDate,
 			String connectionStatus) {
 		super();
 		this.connectionId = connectionId;
@@ -250,11 +276,11 @@ public class Connection implements Serializable {
 		this.state = state;
 	}
 
-	public int getPincode() {
+	public Long getPincode() {
 		return pincode;
 	}
 
-	public void setPincode(int pincode) {
+	public void setPincode(Long pincode) {
 		this.pincode = pincode;
 	}
 

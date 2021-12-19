@@ -32,9 +32,11 @@ public class Reading {
 	@JoinColumn(name = "CONNECTION_ID")
 	private Connection connection;
 	
-	@ManyToOne
-	@JoinColumn(name = "billId")
-	private Bill bill;
+//	@ManyToOne
+//	@JoinColumn(name = "billId")
+//	private Bill bill;
+//	
+	
 	
 	@Column
 	private int unitsConsumed;
@@ -60,12 +62,12 @@ public class Reading {
 	}
 
 
-	public Reading(Long readingId, Connection connection, Bill bill, int unitsConsumed, Long reading,
+	public Reading(Long readingId, Connection connection,  int unitsConsumed, Long reading,
 			LocalDate readingDate, int pricePerUnits) {
 		super();
 		this.readingId = readingId;
 		this.connection = connection;
-		this.bill = bill;
+	
 		this.unitsConsumed = unitsConsumed;
 		this.reading = reading;
 		this.readingDate = readingDate;
@@ -90,16 +92,6 @@ public class Reading {
 
 	public void setConnection(Connection connection) {
 		this.connection = connection;
-	}
-
-
-	public Bill getBill() {
-		return bill;
-	}
-
-
-	public void setBill(Bill bill) {
-		this.bill = bill;
 	}
 
 
@@ -145,7 +137,7 @@ public class Reading {
 
 	@Override
 	public String toString() {
-		return "Reading [readingId=" + readingId + ", connection=" + connection + ", bill=" + bill + ", unitsConsumed="
+		return "Reading [readingId=" + readingId + ", connection=" + connection + ", unitsConsumed="
 				+ unitsConsumed + ", reading=" + reading + ", readingDate=" + readingDate + ", pricePerUnits="
 				+ pricePerUnits + "]";
 	}

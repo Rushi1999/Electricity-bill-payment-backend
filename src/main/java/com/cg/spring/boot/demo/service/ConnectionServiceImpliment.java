@@ -43,8 +43,7 @@ class ConnectionServiceImpliment implements  ConnectionService
 	}
   
   
-  
-	
+
   
   @Override
   public List<Connection>getAllConnection() {

@@ -39,18 +39,18 @@ public class ReadingController {
 		return readEntity;
 	}
 
-	@GetMapping("/getreadingbynumberandbilldate/{billDate}")
-	public ResponseEntity<Reading> getreadingbynumberandbilldate(Long consumerNumber, @PathVariable LocalDate billDate)
-			throws NoSuchCustomerException {
-		LOG.info("getreadingbynumberandbilldate");
-		Reading readingId = readingService.getreadMeterReadingByConsumerNumberAndBillDate(consumerNumber, billDate); // line
-		LOG.info(readingId.toString());
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("message", "This consumerNumber and BillDate is available in the database.");
-		LOG.info(headers.toString());
-		ResponseEntity<Reading> readEntity = new ResponseEntity<Reading>(HttpStatus.OK);
-		return readEntity;
-	}
+//	@GetMapping("/getreadingbynumberandbilldate/{billDate}")
+//	public ResponseEntity<Reading> getreadingbynumberandbilldate(Long consumerNumber, @PathVariable LocalDate billDate)
+//			throws NoSuchCustomerException {
+//		LOG.info("getreadingbynumberandbilldate");
+//		Reading readingId = readingService.getreadMeterReadingByConsumerNumberAndBillDate(consumerNumber, billDate); // line
+//		LOG.info(readingId.toString());
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("message", "This consumerNumber and BillDate is available in the database.");
+//		LOG.info(headers.toString());
+//		ResponseEntity<Reading> readEntity = new ResponseEntity<Reading>(HttpStatus.OK);
+//		return readEntity;
+//	}
 
 	// http://localhost:8082/readMeterReadingByConsumerNumber
 	@GetMapping("/readmeterbynumber/{Number}")
