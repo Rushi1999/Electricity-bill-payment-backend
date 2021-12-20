@@ -2,19 +2,20 @@ package com.cg.spring.boot.demo.service;
 
 import java.util.List;
 
+import javax.transaction.InvalidTransactionException;
+
+import org.springframework.mail.MailException;
+
 import com.cg.spring.boot.demo.exception.NoSuchCustomerException;
 import com.cg.spring.boot.demo.model.Payment;
 import com.cg.spring.boot.demo.model.PaymentStatus;
 
 public interface PaymentService {
-		
-//	public PaymentStatus payBill(Payment payment);
-	public void sendEmailOnPaymentCompletion(Long paymentId, String email);
+	public PaymentStatus payBill(Payment payment) throws InvalidTransactionException;
+	//public void sendEmailOnPaymentCompletion(String toEmail, String body, String subject) throws MailException ;
+	public List<Payment> viewHistoricalPayment(Long consumerNumber)throws NoSuchCustomerException;
+	Payment getPaymentById(Long paymentId) throws NoSuchCustomerException;
+	List<Payment> getAllPayments();
 	
-//	public List<Payment> viewHistoricalPayment(Long paymentId) throws NoSuchCustomerException;
 	
-	public PaymentStatus payBill(Long paymentId) throws NoSuchCustomerException;
-	
-	public List<Payment> viewHistoricalPayment(Long consumerNumber) throws NoSuchCustomerException;
-	 
 }

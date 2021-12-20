@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
+import com.cg.spring.boot.demo.exception.NoSuchCustomerException;
 import com.cg.spring.boot.demo.model.Connection;
 import com.cg.spring.boot.demo.service.ConnectionService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,6 @@ public class ConnectionController {
  // http://localhost:8082/registerCustomer
     @PostMapping("/addConnection")
     public ResponseEntity<Connection> addConnection(@RequestBody Connection connection) throws NoSuchConnectionException {
-    	
     	 LOG.info(connection.toString());
     	 HttpHeaders headers = new HttpHeaders();
     		headers.add("message", "connection created successfully.");
@@ -93,5 +93,18 @@ public class ConnectionController {
 		return response;
 	}
 	
+//	// http://localhost:8082/getConnectionbyId/{customerId}
+//		@GetMapping("/getConnectionbyId/{customerId}")
+//		public ResponseEntity<Connection>getConnectionByCustomerId(@PathVariable(name = "customerId")int customerId) throws NoSuchConnectionException{
+//			LOG.info("getConnectionById");
+//			Connection connection = connectionService.getConnectionByCustomerId(customerId); 
+//			LOG.info(connection.toString());
+//			HttpHeaders headers = new HttpHeaders();
+//			headers.add("message", "This connection is available in the database.");
+//			LOG.info(headers.toString());
+//			ResponseEntity<Connection> response = new ResponseEntity<Connection>(connection,headers,HttpStatus.OK);
+//			return response;
+//		}
+		
 
 }

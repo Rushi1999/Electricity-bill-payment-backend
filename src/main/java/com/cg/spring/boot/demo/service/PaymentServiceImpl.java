@@ -1,106 +1,109 @@
 package com.cg.spring.boot.demo.service;
+
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.InvalidTransactionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-
-import com.cg.spring.boot.demo.controller.PaymentController;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import com.cg.spring.boot.demo.exception.NoSuchCustomerException;
 import com.cg.spring.boot.demo.model.Payment;
 import com.cg.spring.boot.demo.model.PaymentStatus;
 import com.cg.spring.boot.demo.repository.PaymentRepository;
 
+
 @Service("paymentservice")
 public class PaymentServiceImpl implements PaymentService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(PaymentController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(PaymentServiceImpl.class);
 
 	@Autowired
-	private PaymentRepository paymentRepo;
+	private PaymentServiceImpl paymentService;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
+	
+//	@Autowired
+//	private JavaMailSender javaMailSender;
+	
 	
 	@Override
-	public PaymentStatus payBill(Long paymentId) throws NoSuchCustomerException {
-		LOG.info("payBill");
-		Optional<Payment> paymentOpt = paymentRepo.findById(paymentId);
-		if (paymentOpt.isPresent()) {
-			LOG.info(" Success");
-			return ((Payment) paymentRepo).getStatus();
-		} else {
-			LOG.info(" Failed");
-			throw new NoSuchCustomerException("Payment Failed");
-		}
-//		return null;
-	}
+	public Payment getPaymentById(Long paymentId) throws NoSuchCustomerException {
+		LOG.info("get PaymentId ById");
+			Optional<Payment> connection = paymentRepository.findById(paymentId);
+			if (connection.isPresent()) {
+				LOG.info("PaymentId is available.");
+				return connection.get();
+			} else {
+				LOG.error("PaymentId is NOT available.");
+				throw new NoSuchCustomerException(paymentId + " this paymentId is not found.");
+			}		
 
-//	
-
+	}	
+	
 	@Override
-	public List<Payment> viewHistoricalPayment(Long customerId) throws NoSuchCustomerException{
-		List<Payment> list = paymentRepo.findByCustomer_customerId(customerId);
-		if (!list.isEmpty()) {
-			LOG.info("find all historical payment");
-			return list;
+	  public List<Payment>getAllPayments() {
+			System.out.println("Service getAllPayment");
+			return paymentRepository.findAll();
+		}
+	  
+	
+	
+	@Override
+	public PaymentStatus payBill(Payment payment) throws InvalidTransactionException {
+		LOG.info(" Pay-Bills ");
+		boolean pay = paymentRepository.existsById(payment.getPaymentId());
+		if(pay) {
+			LOG.info("Payment initiated");
+			return ((paymentRepository.save(payment)).getStatus());
 		}
 		else {
-		LOG.error("No such record found");
-		throw new NoSuchCustomerException("No such record found");
-//		return null;
+			LOG.info("paymentId not found in Database");
+			throw new InvalidTransactionException("Payment is failed due to Invalid details");
 		}
 		
-	
 	}
+
+//	public void sendEmailOnPaymentCompletion(String toEmail, String body, String subject) throws MailException {
+//		SimpleMailMessage simpleMail = new SimpleMailMessage();
+//		
+//		simpleMail.setTo(toEmail);
+//		simpleMail.setSubject(subject);
+//		simpleMail.setText(body);
+//		simpleMail.setFrom("e.billpayment.sprint1@gmail.com");
+//		
+//		javaMailSender.send(simpleMail);
+//		LOG.info("Mail send...");
+//		
+//	}
+//	
+//	@EventListener(ApplicationReadyEvent.class)
+//	public void triggerMail() {
+//		paymentService.sendEmailOnPaymentCompletion("e.billpayment.sprint1@gmail.com", 
+//				"Thankyou for paying bill and you have won the gift coin ", "Bill paymentment");
+//		
+//	}
+	
 	
 	@Override
-	public void sendEmailOnPaymentCompletion(Long paymentId, String email) {
-		// TODO Auto-generated method stub
-		
+	public List<Payment> viewHistoricalPayment(Long customerId) throws NoSuchCustomerException {
+		LOG.info("Get all paymentHistory ");
+		boolean pay = paymentRepository.existsById(customerId);
+		if(pay){
+		LOG.info("customer Id found ");
+		return paymentRepository.getListBycustomerId(customerId);
+	} else {
+		LOG.info("farmer ID not found");
+		throw new NoSuchCustomerException ("CustomerId not found");
 	}
-
-//	@Override
-//	public List<Payment> viewHistoricalPayment(Long paymentId) throws NoSuchCustomerException {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 }
-
-
-
-//@Override
-//public void sendEmailOnPaymentCompletion(Long paymentId, String email) {
-//	// TODO Auto-generated method stub
-//	
-//}
-
-//
-//
-//@Override
-//public PaymentStatus payBill(Payment payment) {
-//	LOG.info("payBill");
-//	Optional<Payment> paymentOpt = paymentRepository.findById(payment);
-//	if (paymentOpt.isPresent()) {
-//		LOG.info(" Success");
-//		return ((Payment) paymentRepository).getStatus();
-//	} else {
-//		LOG.info(" Failed");
-//	}
-//	return null;
-//}
-//
-//@Override
-//public void sendEmailOnPaymentCompletion(Long consumerNumber, String email) {
-//	LOG.info("sendEmailOnPaymentCompletion");
-//	
-//	Customer paymentOpt = paymentRepository.findByConsumerNumber(consumerNumber);
-//	if (paymentOpt.equals(consumerNumber)) {
-//		paymentRepository.;
-//		LOG.info("Employee id is deleted.");
-//		return empOpt.get();
-//	} else {
-//		LOG.info("Employee is NOT available.");
-//		throw new EmployeeNotFoundException(eid + " this employee id is not found.");
-//	}
-//}
+	
+}

@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
 import com.cg.spring.boot.demo.exception.NoSuchConsumerNumberException;
 import com.cg.spring.boot.demo.exception.NoSuchDateRangeException;
 import com.cg.spring.boot.demo.exception.NoSuchEmailException;
 import com.cg.spring.boot.demo.exception.NoSuchMobileNumberException;
 import com.cg.spring.boot.demo.model.Bill;
+import com.cg.spring.boot.demo.model.Connection;
+import com.cg.spring.boot.demo.model.Reading;
 import com.cg.spring.boot.demo.service.BillServiceImpl;
 
 
@@ -35,20 +38,50 @@ public class BillController {
 	//private BillServiceImpl billServiceImpl;
 	
 	
+	@GetMapping("/getallbill")
+	public List<Bill> getAllBill() {
+		LOG.info("getAllBill"); // in normal block
+//		LOG.debug("getAllEmps"); // in debug mode 
+		return billService.getAllBill();
+	}
+	// http://localhost:8082/getConnectionbyId/{connectionId}
+		@GetMapping("/getBillbyId/{billId}")
+		public ResponseEntity<Bill>getBillById(@PathVariable(name = "billId")Long billId) throws NoSuchConnectionException {
+			LOG.info("getBillById");
+			Bill bill = billService.getBillById(billId); 
+			LOG.info(bill.toString());
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("message", "This bill is available in the database.");
+			LOG.info(headers.toString());
+			ResponseEntity<Bill> response = new ResponseEntity<Bill>(bill,headers,HttpStatus.OK);
+			return response;
+		}
+	
 	// http://localhost:8082/viewBillByConsumerNumber/
 	@GetMapping(path = "/viewBillByConsumerNumber/{consumerNumber}")
-	public ResponseEntity<Bill> viewBillByConsumerNumber(
-			@PathVariable(name = "consumerNumber")Long consumerNumber) 
-			throws NoSuchConsumerNumberException {
+	public ResponseEntity<Bill> viewBillByConsumerNumber(@PathVariable(name = "consumerNumber")Long consumerNumber) throws NoSuchConnectionException {
 		LOG.info("viewBillByConsumerNumber");
-		Bill bill = billService.viewBillByConsumerNumber(consumerNumber);
+		List<Bill> bill= billService.viewBillByConsumerNumber(consumerNumber); 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "This bill is available in the database ");
 		LOG.info(headers.toString());
-		ResponseEntity<Bill> response = new ResponseEntity<Bill>(bill, headers, HttpStatus.OK);
+		ResponseEntity<Bill> response = new ResponseEntity<Bill>((Bill) bill, headers, HttpStatus.OK);
 		return response;
 	}
 	
+//	@GetMapping("/readmeterbyConsumerNumber/{consumerNumber}")
+//	public ResponseEntity<Reading> readMeterReadingByConsumerNumber(@PathVariable Long consumerNumber)
+//			throws NoSuchConnectionException {
+//		LOG.info("readmeterbynumber");
+//		List<Reading> reading = readingService.getreadMeterReadingByConsumerNumber(consumerNumber); // line
+//		HttpHeaders headers = new HttpHeaders();
+//		LOG.info(headers.toString());
+//		headers.add("message", "This consumerNumber is available in the database.");
+//		LOG.info(headers.toString());
+//		ResponseEntity<Reading> response = new ResponseEntity<Reading>( HttpStatus.OK);
+//		return response;
+//	}
+//}
 	
 	// http://localhost:8082/viewBillByMobileNumber/
 	@GetMapping("/viewBillByMobileNumber/{mobileNumber}")

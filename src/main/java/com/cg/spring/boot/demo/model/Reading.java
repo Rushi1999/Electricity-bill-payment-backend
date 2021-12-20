@@ -20,8 +20,7 @@ public class Reading {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column
-	private Long readingId;
-
+	private int readingId;
 	
 	
 //	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -62,7 +61,7 @@ public class Reading {
 	}
 
 
-	public Reading(Long readingId, Connection connection,  int unitsConsumed, Long reading,
+	public Reading(int readingId, Connection connection,  int unitsConsumed, Long reading,
 			LocalDate readingDate, int pricePerUnits) {
 		super();
 		this.readingId = readingId;
@@ -75,12 +74,12 @@ public class Reading {
 	}
 
 
-	public Long getReadingId() {
+	public int getReadingId() {
 		return readingId;
 	}
 
 
-	public void setReadingId(Long readingId) {
+	public void setReadingId(int readingId) {
 		this.readingId = readingId;
 	}
 

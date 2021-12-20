@@ -2,17 +2,21 @@ package com.cg.spring.boot.demo.service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
 import com.cg.spring.boot.demo.exception.NoSuchConsumerNumberException;
 import com.cg.spring.boot.demo.exception.NoSuchDateRangeException;
 import com.cg.spring.boot.demo.exception.NoSuchEmailException;
 import com.cg.spring.boot.demo.exception.NoSuchMobileNumberException;
 import com.cg.spring.boot.demo.model.Bill;
+import com.cg.spring.boot.demo.model.Connection;
+import com.cg.spring.boot.demo.model.Reading;
 import com.cg.spring.boot.demo.repository.BillRepository;
 
 @Service("bill_service")
@@ -23,21 +27,51 @@ public class BillServiceImpl implements BillService {
 	@Autowired
 	private BillRepository billDao;
 
+	
 	@Override
-	public Bill viewBillByConsumerNumber(Long consumerNumber) throws NoSuchConsumerNumberException {
+	public List<Bill> viewBillByConsumerNumber(Long consumerNumber) throws NoSuchConnectionException {
 		LOG.info("viewBillByConsumerNumber");
-		Bill billopt = billDao.readBillByConsumerNumber(consumerNumber);
+		List<Bill> billopt = billDao.readBillByConsumerNumber(consumerNumber);
 		LOG.info("data fetched for viewBillByConsumerNumber");
-
 		if (billopt != null) {
 			LOG.info("Bill is available");
 			return billopt;
 		} else {
 			LOG.info("Bill is not available");
-			throw new NoSuchConsumerNumberException(consumerNumber + " This bill is not found");
+			throw new  NoSuchConnectionException(consumerNumber + " This bill is not found");
 		}
 	}
+	
+	
+//	@Override
+//	public List<Reading> getreadMeterReadingByConsumerNumber(Long consumerNumber) throws NoSuchConnectionException {
+//		// TODO Auto-generated method stub
+//		LOG.info("getreadMeterReadingByConsumerNumber");
+//		if(connectionRepository.findByConsumerNumber(consumerNumber)!=null)
+//		return readingRepository.findByConnection_consumerNumber(consumerNumber);
+//			throw new NoSuchConnectionException(consumerNumber + " this consumerNumber is not found.");
+//		}
+			
+	@Override
+	public List<Bill> getAllBill() {
+		System.out.println("Service getAllBills");
+		return billDao.findAll();
+	}
 
+	@Override
+	public Bill getBillById(Long billId) throws NoSuchConnectionException {
+		LOG.info("getConnectionIdById");
+		Optional<Bill> bill = billDao.findById(billId);
+		if (bill.isPresent()) {
+			LOG.info("Connection is available.");
+			return bill.get();
+		} else {
+			LOG.error("connection is NOT available.");
+			throw new NoSuchConnectionException(billId + " this connection is not found.");
+		}
+
+	}
+	
 	@Override
 	public Bill viewBillByMobileNumber(Long mobileNumber) throws NoSuchMobileNumberException {
 		LOG.info("viewBillByMobileNumber");
