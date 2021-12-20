@@ -24,6 +24,7 @@ import com.cg.spring.boot.demo.model.Reading;
 import com.cg.spring.boot.demo.repository.ReadingRepository;
 import com.cg.spring.boot.demo.service.ReadingService;
 
+
 @RestController
 @RequestMapping("/reading")
 @CrossOrigin(origins = "*")

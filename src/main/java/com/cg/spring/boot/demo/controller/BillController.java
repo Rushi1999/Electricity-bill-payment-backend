@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
@@ -26,8 +28,9 @@ import com.cg.spring.boot.demo.model.Reading;
 import com.cg.spring.boot.demo.service.BillServiceImpl;
 
 
-
 @RestController
+@RequestMapping("/bill")
+@CrossOrigin(origins = "*")
 public class BillController {
 	
 	private static final Logger LOG = LoggerFactory.getLogger(BillController.class);
