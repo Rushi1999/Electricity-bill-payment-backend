@@ -1,7 +1,5 @@
 package com.cg.spring.boot.demo.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,13 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.spring.boot.demo.exception.NoSuchConnectionException;
-import com.cg.spring.boot.demo.exception.NoSuchConsumerNumberException;
-import com.cg.spring.boot.demo.exception.NoSuchDateRangeException;
 import com.cg.spring.boot.demo.exception.NoSuchEmailException;
 import com.cg.spring.boot.demo.exception.NoSuchMobileNumberException;
 import com.cg.spring.boot.demo.model.Bill;
-import com.cg.spring.boot.demo.model.Connection;
-import com.cg.spring.boot.demo.model.Reading;
 import com.cg.spring.boot.demo.service.BillServiceImpl;
 
 
@@ -40,14 +34,16 @@ public class BillController {
 	private BillServiceImpl billService;
 	//private BillServiceImpl billServiceImpl;
 	
-	
-	@GetMapping("/getallbill")
+	// http://localhost:8082/getAllBill
+	@GetMapping("/getAllbill")
 	public List<Bill> getAllBill() {
 		LOG.info("getAllBill"); // in normal block
 //		LOG.debug("getAllEmps"); // in debug mode 
 		return billService.getAllBill();
 	}
-	// http://localhost:8082/getConnectionbyId/{connectionId}
+	
+	
+	// http://localhost:8082/getBillbyId/{billId}
 		@GetMapping("/getBillbyId/{billId}")
 		public ResponseEntity<Bill>getBillById(@PathVariable(name = "billId")Long billId) throws NoSuchConnectionException {
 			LOG.info("getBillById");
@@ -68,23 +64,11 @@ public class BillController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("message", "This bill is available in the database ");
 		LOG.info(headers.toString());
-		ResponseEntity<Bill> response = new ResponseEntity<Bill>((Bill) bill, headers, HttpStatus.OK);
+		ResponseEntity<Bill> response = new ResponseEntity<Bill>((Bill) bill.get(0), headers, HttpStatus.OK);
 		return response;
 	}
 	
-//	@GetMapping("/readmeterbyConsumerNumber/{consumerNumber}")
-//	public ResponseEntity<Reading> readMeterReadingByConsumerNumber(@PathVariable Long consumerNumber)
-//			throws NoSuchConnectionException {
-//		LOG.info("readmeterbynumber");
-//		List<Reading> reading = readingService.getreadMeterReadingByConsumerNumber(consumerNumber); // line
-//		HttpHeaders headers = new HttpHeaders();
-//		LOG.info(headers.toString());
-//		headers.add("message", "This consumerNumber is available in the database.");
-//		LOG.info(headers.toString());
-//		ResponseEntity<Reading> response = new ResponseEntity<Reading>( HttpStatus.OK);
-//		return response;
-//	}
-//}
+
 	
 	// http://localhost:8082/viewBillByMobileNumber/
 	@GetMapping("/viewBillByMobileNumber/{mobileNumber}")
@@ -112,40 +96,22 @@ public class BillController {
 	
 	
 	
-	// http://localhost:8082/getbydatebet/2021-10-01/2021-11-01
-	@GetMapping(path = "/getbydatebet/from:{from}/to:{to}")
-	public ResponseEntity<List<Bill>> readBillForDateRange(@PathVariable("from") String from,
-			@PathVariable("to") String to) throws NoSuchDateRangeException {
-		LOG.info("readBillForDateRange");
-		  
-	        LocalDate fromDate = LocalDate.parse(from, DateTimeFormatter.ISO_DATE);
-	        LocalDate toDate = LocalDate.parse(to, DateTimeFormatter.ISO_DATE);		  
-		  
-		ResponseEntity<List<Bill>> response = null;
-//		List<Bill> list = billService.viewBillForDateRange(from, to);
-		List<Bill> list = billService.viewBillForDateRange(fromDate, toDate);
-		response = new ResponseEntity<List<Bill>>(list, HttpStatus.OK);
-		return response;
-		
-	}
-	
-	
-	
-	
 //	// http://localhost:8082/getbydatebet/2021-10-01/2021-11-01
-//	@GetMapping("/getbydatebet/{from}/{to}")
-//	public List<Bill> readBillForDateRange(@PathVariable(name = "from")String from, @PathVariable(name = "to")String to) 
-//			throws NoSuchDateRangeException {
+//	@GetMapping(path = "/getbydatebet/from:{from}/to:{to}")
+//	public ResponseEntity<List<Bill>> readBillForDateRange(@PathVariable("from") String from,
+//			@PathVariable("to") String to) throws NoSuchDateRangeException {
 //		LOG.info("readBillForDateRange");
-//		LOG.info("from==>{}",from);
-//		LOG.info("to==>{}",to);
-//		LocalDate fromDate = LocalDate.parse(from);
-//		LocalDate toDate = LocalDate.parse(to);
-//
-//		LOG.info("fromDate==>{}",fromDate);
-//		LOG.info("toDate==>{}",toDate);
-//		return billServiceImpl.viewBillForDateRange(fromDate, toDate);
-//
+//		  
+//	        LocalDate fromDate = LocalDate.parse(from, DateTimeFormatter.ISO_DATE);
+//	        LocalDate toDate = LocalDate.parse(to, DateTimeFormatter.ISO_DATE);		  
+//		  
+//		ResponseEntity<List<Bill>> response = null;
+////		List<Bill> list = billService.viewBillForDateRange(from, to);
+//		List<Bill> list = billService.viewBillForDateRange(fromDate, toDate);
+//		response = new ResponseEntity<List<Bill>>(list, HttpStatus.OK);
+//		return response;
+//		
 //	}
+	
 
 }
